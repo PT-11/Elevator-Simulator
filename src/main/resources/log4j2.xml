@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="error">
+	<Appenders>
+		<Console name="StdOut" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+		</Console>
+		
+		<RollingFile name="TraceFileAppender" fileName="logs/TraceLog.log"
+	                 filePattern="logs/$${date:dd-MM-yyyy}/TraceLog-%d{dd-MM-yyyy}-%i.log.gz">
+		      <PatternLayout>
+		        <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</Pattern>
+		      </PatternLayout>
+		      <Policies>
+		        <TimeBasedTriggeringPolicy />
+		        <SizeBasedTriggeringPolicy size="10MB"/>
+		      </Policies>
+		
+		      <DefaultRolloverStrategy max="5"/>
+	    </RollingFile>
+	    
+	    <RollingFile name="ErrorFileAppender" fileName="logs/ErrorLog.log"
+	                 filePattern="logs/$${date:dd-MM-yyy}/ErrorLog-%d{dd-MM-yyyy}-%i.log.gz">
+		      <PatternLayout>
+		        <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</Pattern>
+		      </PatternLayout>
+		      <Policies>
+		        <TimeBasedTriggeringPolicy />
+		        <SizeBasedTriggeringPolicy size="10MB"/>
+		      </Policies>
+		
+		      <DefaultRolloverStrategy max="5"/>
+	    </RollingFile>
+	    
+	</Appenders>
+	<Loggers>
+		<Root level="trace">
+		<AppenderRef ref="StdOut" level="trace"/>
+		</Root>
+		<Logger name="com.elevator" level="trace" additivity="true">
+		 	<AppenderRef ref="TraceFileAppender" level="trace" />
+			<AppenderRef ref="ErrorFileAppender" level="error" />
+		</Logger>
+	</Loggers>
+</Configuration>

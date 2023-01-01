@@ -1,0 +1,5 @@
+MaxFloor:12
+MinFloor:1
+NumberOfElevators:5
+MaxCapacity:8
+TimeInterval:250
